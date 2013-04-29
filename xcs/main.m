@@ -7,15 +7,20 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XCProject.h"
 
 int main(int argc, const char * argv[])
 {
-
+    
     @autoreleasepool {
-        
-        // insert code here...
-        NSLog(@"Hello, World!");
-        
+        NSError *err;
+        XCProject *proj = [[XCProject alloc] init];
+        NSString *projData = [NSString stringWithContentsOfFile:@"project.pbxproj" encoding:NSUTF8StringEncoding error:&err];
+        if (projData == nil) {
+            NSLog(@"Failed ot read project file: %@", [err localizedDescription]);
+            exit (1);
+        }
+        [proj parse:projData];
     }
     return 0;
 }

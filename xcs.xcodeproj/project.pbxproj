@@ -10,6 +10,8 @@
 		9F4D4847172DE8E5003F0E26 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F4D4846172DE8E5003F0E26 /* Foundation.framework */; };
 		9F4D484A172DE8E5003F0E26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D4849172DE8E5003F0E26 /* main.m */; };
 		9F4D484E172DE8E5003F0E26 /* xcs.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F4D484D172DE8E5003F0E26 /* xcs.1 */; };
+		9F4D4856172DE953003F0E26 /* XCProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D4855172DE953003F0E26 /* XCProject.m */; };
+		9F4D4859172DF702003F0E26 /* XCElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D4858172DF702003F0E26 /* XCElement.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,10 @@
 		9F4D4849172DE8E5003F0E26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9F4D484C172DE8E5003F0E26 /* xcs-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "xcs-Prefix.pch"; sourceTree = "<group>"; };
 		9F4D484D172DE8E5003F0E26 /* xcs.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = xcs.1; sourceTree = "<group>"; };
+		9F4D4854172DE953003F0E26 /* XCProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCProject.h; sourceTree = "<group>"; };
+		9F4D4855172DE953003F0E26 /* XCProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCProject.m; sourceTree = "<group>"; };
+		9F4D4857172DF702003F0E26 /* XCElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCElement.h; sourceTree = "<group>"; };
+		9F4D4858172DF702003F0E26 /* XCElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCElement.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +80,10 @@
 			isa = PBXGroup;
 			children = (
 				9F4D4849172DE8E5003F0E26 /* main.m */,
+				9F4D4854172DE953003F0E26 /* XCProject.h */,
+				9F4D4857172DF702003F0E26 /* XCElement.h */,
+				9F4D4858172DF702003F0E26 /* XCElement.m */,
+				9F4D4855172DE953003F0E26 /* XCProject.m */,
 				9F4D484D172DE8E5003F0E26 /* xcs.1 */,
 				9F4D484B172DE8E5003F0E26 /* Supporting Files */,
 			);
@@ -140,6 +150,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F4D484A172DE8E5003F0E26 /* main.m in Sources */,
+				9F4D4856172DE953003F0E26 /* XCProject.m in Sources */,
+				9F4D4859172DF702003F0E26 /* XCElement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
