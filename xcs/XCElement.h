@@ -33,4 +33,5 @@ typedef enum
 
 @interface XCDictionary : XCElement
 @property (strong) NSDictionary *dictValue;
+- (XCElement*)elementForKey:(NSString*)key;
 @end

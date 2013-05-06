@@ -14,6 +14,11 @@
     
     return elNone;
 }
+
+- (void)dump
+{
+    NSLog(@"%@", self);
+}
 @end
 
 @implementation XCString
@@ -46,7 +51,11 @@
     while ((key = [enumerator nextObject])) {
         NSLog(@"%@ --> %@", key, [_dictValue objectForKey:key]);
     }
+}
 
+- (XCElement*)elementForKey:(NSString*)key
+{
+    return  [_dictValue objectForKey:key];
 }
 
 @end

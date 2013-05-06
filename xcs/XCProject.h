@@ -10,16 +10,10 @@
 #import "XCElement.h"
 
 @interface XCProject : NSObject {
-    NSUInteger _lexerPos;
-    NSUInteger _row, _col;
-    NSUInteger _prevRow, _prevCol;
-    BOOL _nextLine;
-    XCDictionary *parserRoot;
+    XCDictionary *projDict;
 }
 
-@property (strong) NSString *pbxData;
-@property (strong) NSString *tokValue;
-
 - (BOOL)parse:(NSString*)data;
+- (void)list;
 
 @end

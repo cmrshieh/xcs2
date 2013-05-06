@@ -11,7 +11,11 @@
 
 int main(int argc, const char * argv[])
 {
-    
+    if (argc < 2) {
+        fprintf(stderr, "Usage: %s project.pbxproj\n", argv[0]);
+        exit(0);
+    }
+
     @autoreleasepool {
         NSError *err;
         XCProject *proj = [[XCProject alloc] init];
@@ -28,6 +32,8 @@ int main(int argc, const char * argv[])
         @catch (NSException *exception) {
             NSLog(@"Parser failed: %@", exception);
         }
+
+        [proj list];
     }
     return 0;
 }

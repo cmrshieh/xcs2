@@ -12,6 +12,7 @@
 		9F4D484E172DE8E5003F0E26 /* xcs.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F4D484D172DE8E5003F0E26 /* xcs.1 */; };
 		9F4D4856172DE953003F0E26 /* XCProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D4855172DE953003F0E26 /* XCProject.m */; };
 		9F4D4859172DF702003F0E26 /* XCElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D4858172DF702003F0E26 /* XCElement.m */; };
+		9F6001E91738598A007FB43F /* XCProjectParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6001E81738598A007FB43F /* XCProjectParser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,8 @@
 		9F4D4855172DE953003F0E26 /* XCProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCProject.m; sourceTree = "<group>"; };
 		9F4D4857172DF702003F0E26 /* XCElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCElement.h; sourceTree = "<group>"; };
 		9F4D4858172DF702003F0E26 /* XCElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCElement.m; sourceTree = "<group>"; };
+		9F6001E71738598A007FB43F /* XCProjectParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCProjectParser.h; sourceTree = "<group>"; };
+		9F6001E81738598A007FB43F /* XCProjectParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCProjectParser.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,10 +83,12 @@
 			isa = PBXGroup;
 			children = (
 				9F4D4849172DE8E5003F0E26 /* main.m */,
+				9F6001E71738598A007FB43F /* XCProjectParser.h */,
+				9F6001E81738598A007FB43F /* XCProjectParser.m */,
 				9F4D4854172DE953003F0E26 /* XCProject.h */,
+				9F4D4855172DE953003F0E26 /* XCProject.m */,
 				9F4D4857172DF702003F0E26 /* XCElement.h */,
 				9F4D4858172DF702003F0E26 /* XCElement.m */,
-				9F4D4855172DE953003F0E26 /* XCProject.m */,
 				9F4D484D172DE8E5003F0E26 /* xcs.1 */,
 				9F4D484B172DE8E5003F0E26 /* Supporting Files */,
 			);
@@ -152,6 +157,7 @@
 				9F4D484A172DE8E5003F0E26 /* main.m in Sources */,
 				9F4D4856172DE953003F0E26 /* XCProject.m in Sources */,
 				9F4D4859172DF702003F0E26 /* XCElement.m in Sources */,
+				9F6001E91738598A007FB43F /* XCProjectParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +260,7 @@
 				9F4D4853172DE8E5003F0E26 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
