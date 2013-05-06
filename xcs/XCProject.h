@@ -11,6 +11,9 @@
 
 @interface XCProject : NSObject {
     NSUInteger _lexerPos;
+    NSUInteger _row, _col;
+    NSUInteger _prevRow, _prevCol;
+    BOOL _nextLine;
     XCDictionary *parserRoot;
 }
 

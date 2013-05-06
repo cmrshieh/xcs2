@@ -55,6 +55,8 @@ BOOL isbare(int ch)
     if (self) {
         _tokValue = nil;
         _lexerPos = 0;
+        _row = 1;
+        _col = 0;
         _pbxData = nil;
     }
     return self;
@@ -182,7 +184,12 @@ BOOL isbare(int ch)
 
 - (void)parserFailure:(NSString*)msg onCodeLine:(int)line
 {
-    NSLog(@"parser failed on line %d: %@", line, msg);
+    NSString *excMsg = [NSString stringWithFormat:@"line %ld, col %ld:  %@", _row, _col, msg];
+    NSException *exception = [NSException 
+                              exceptionWithName:@"ParserFailure" 
+                              reason:excMsg 
+                              userInfo:nil];
+    @throw exception;
 }
 
 
@@ -191,16 +198,40 @@ BOOL isbare(int ch)
 //
 - (int)nextChar
 {
+    int ch;
+
     if (_lexerPos >= [_pbxData length])
         return kEOFChar;
+   
+    ch = [_pbxData characterAtIndex:(_lexerPos++)];
+
+    _prevRow = _row;
+    _prevCol = _col;
+
+    if (_nextLine) {
+        _col = 1;
+        _row++;
+        _nextLine = NO;
+    }
     else
-        return [_pbxData characterAtIndex:(_lexerPos++)];
+        _col++;
+
+    if (ch == '\n')
+        _nextLine = YES;
+
+    return ch;
 }
 
+// This function can't be called several times in row
+// should be used only once
 - (void)prevChar
 {
-    if (_lexerPos > 0)
+
+    if (_lexerPos > 0) {
+        _col = _prevCol;
+        _row = _prevRow;
         _lexerPos--;
+    }
 }
 
 - (int)nextToken
@@ -278,7 +309,8 @@ BOOL isbare(int ch)
 {
     unichar uch[TMP_BUFFER];
     int i;
-    int ch;
+    int ch, escCh;
+    BOOL quoteClosed = NO;
     
     self.tokValue = nil;
     i = 0;
@@ -286,11 +318,32 @@ BOOL isbare(int ch)
     
     ch = [self nextChar];
     while (ch != tokEOF) {
-        if (ch == '"')
+        if (ch == '"') {
+            quoteClosed = YES;
             break;
+        }
         
         // safe, it can't be tokEOF
-        // TODO: escape sequences
+        if (ch == '\\') {
+            escCh = [self nextChar];
+            switch (escCh) {
+            case 'r':
+                ch = '\r';
+                break;
+            case 'n':
+                ch = '\n';
+                break;
+            case '\\':
+                ch = '\\';
+                break;
+            case '"':
+                ch = '"';
+                break;
+            default:
+                [self parserFailure:@"Invalid escape sequence" onCodeLine:__LINE__];
+                break;
+            }
+        }
         uch[i++] = ch;
         if (i == TMP_BUFFER) {
             [tmpString appendString:[NSString stringWithCharacters:uch length:i]];
@@ -298,8 +351,11 @@ BOOL isbare(int ch)
         }
         ch = [self nextChar];
     }
+
+    if (!quoteClosed) {
+        [self parserFailure:@"No closing quote before EOF" onCodeLine:__LINE__];
+    }
     
-    // TODO: handle non-closed quotes
     if (i)
         [tmpString appendString:[NSString stringWithCharacters:uch length:i]];
     
