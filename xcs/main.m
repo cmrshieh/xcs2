@@ -15,12 +15,19 @@ int main(int argc, const char * argv[])
     @autoreleasepool {
         NSError *err;
         XCProject *proj = [[XCProject alloc] init];
-        NSString *projData = [NSString stringWithContentsOfFile:@"project.pbxproj" encoding:NSUTF8StringEncoding error:&err];
+        NSString *f = [NSString stringWithUTF8String:argv[1]];
+        NSLog(@"--> %@", f);
+        NSString *projData = [NSString stringWithContentsOfFile:f encoding:NSUTF8StringEncoding error:&err];
         if (projData == nil) {
             NSLog(@"Failed ot read project file: %@", [err localizedDescription]);
             exit (1);
         }
-        [proj parse:projData];
+        @try {
+            [proj parse:projData];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Parser failed: %@", exception);
+        }
     }
     return 0;
 }
