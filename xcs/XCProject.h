@@ -11,9 +11,12 @@
 
 @interface XCProject : NSObject {
     XCDictionary *projDict;
+    XCDictionary *objects;
+    XCDictionary *rootObj;
 }
 
 - (BOOL)parse:(NSString*)data;
 - (void)list;
+- (XCDictionary*)objectForId:(NSString*)objId;
 
 @end

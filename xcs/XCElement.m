@@ -58,4 +58,38 @@
     return  [_dictValue objectForKey:key];
 }
 
+// More type-strict versions
+- (NSString*)stringValueForKey:(NSString*)key
+{
+    XCElement *el = [_dictValue objectForKey:key];
+    if ([el kind] == elString) {
+        XCString *s = (XCString *)el;
+        return [s.stringValue copy];
+    }
+
+    return nil;
+}
+
+- (NSArray*)arrayValueForKey:(NSString*)key
+{
+    XCElement *el = [_dictValue objectForKey:key];
+    if ([el kind] == elArray) {
+        XCArray *d = (XCArray *)el;
+        return [d.arrayValue copy];
+    }
+
+    return nil;
+}
+
+- (XCDictionary*)dictValueForKey:(NSString*)key
+{
+    XCElement *el = [_dictValue objectForKey:key];
+    if ([el kind] == elDictionary) {
+        XCDictionary *d = (XCDictionary *)el;
+        return d;
+    }
+
+    return nil;
+}
+
 @end
