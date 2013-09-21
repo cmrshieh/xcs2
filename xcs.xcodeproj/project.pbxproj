@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F4874B317ED52AF0023A46B /* cmd_list.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874B217ED52AF0023A46B /* cmd_list.m */; };
+		9F4874B617ED57B10023A46B /* cmd_rm.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874B517ED57B10023A46B /* cmd_rm.m */; };
+		9F4874B917ED5BBF0023A46B /* NSDictionary+PBXObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874B817ED5BBF0023A46B /* NSDictionary+PBXObject.m */; };
+		9F4874BC17ED67DB0023A46B /* NSObject+DeepMutableCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874BB17ED67DB0023A46B /* NSObject+DeepMutableCopy.m */; };
 		9F4D4847172DE8E5003F0E26 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F4D4846172DE8E5003F0E26 /* Foundation.framework */; };
 		9F4D484A172DE8E5003F0E26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D4849172DE8E5003F0E26 /* main.m */; };
 		9F4D484E172DE8E5003F0E26 /* xcs.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F4D484D172DE8E5003F0E26 /* xcs.1 */; };
@@ -27,6 +31,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9F4874B217ED52AF0023A46B /* cmd_list.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cmd_list.m; sourceTree = "<group>"; };
+		9F4874B417ED54630023A46B /* commands.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = commands.h; sourceTree = "<group>"; };
+		9F4874B517ED57B10023A46B /* cmd_rm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cmd_rm.m; sourceTree = "<group>"; };
+		9F4874B717ED5BBF0023A46B /* NSDictionary+PBXObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+PBXObject.h"; sourceTree = "<group>"; };
+		9F4874B817ED5BBF0023A46B /* NSDictionary+PBXObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+PBXObject.m"; sourceTree = "<group>"; };
+		9F4874BA17ED67DB0023A46B /* NSObject+DeepMutableCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DeepMutableCopy.h"; sourceTree = "<group>"; };
+		9F4874BB17ED67DB0023A46B /* NSObject+DeepMutableCopy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DeepMutableCopy.m"; sourceTree = "<group>"; };
 		9F4D4843172DE8E5003F0E26 /* xcs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xcs; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F4D4846172DE8E5003F0E26 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9F4D4849172DE8E5003F0E26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -80,7 +91,14 @@
 				9F4D4854172DE953003F0E26 /* XCProject.h */,
 				9F4D4855172DE953003F0E26 /* XCProject.m */,
 				9F4D484D172DE8E5003F0E26 /* xcs.1 */,
+				9F4874B217ED52AF0023A46B /* cmd_list.m */,
+				9F4874B517ED57B10023A46B /* cmd_rm.m */,
 				9F4D484B172DE8E5003F0E26 /* Supporting Files */,
+				9F4874B417ED54630023A46B /* commands.h */,
+				9F4874B717ED5BBF0023A46B /* NSDictionary+PBXObject.h */,
+				9F4874BA17ED67DB0023A46B /* NSObject+DeepMutableCopy.h */,
+				9F4874BB17ED67DB0023A46B /* NSObject+DeepMutableCopy.m */,
+				9F4874B817ED5BBF0023A46B /* NSDictionary+PBXObject.m */,
 			);
 			path = xcs;
 			sourceTree = "<group>";
@@ -146,6 +164,10 @@
 			files = (
 				9F4D484A172DE8E5003F0E26 /* main.m in Sources */,
 				9F4D4856172DE953003F0E26 /* XCProject.m in Sources */,
+				9F4874B317ED52AF0023A46B /* cmd_list.m in Sources */,
+				9F4874B617ED57B10023A46B /* cmd_rm.m in Sources */,
+				9F4874B917ED5BBF0023A46B /* NSDictionary+PBXObject.m in Sources */,
+				9F4874BC17ED67DB0023A46B /* NSObject+DeepMutableCopy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,56 +8,40 @@
 
 #import <Foundation/Foundation.h>
 #import "XCProject.h"
+#import "commands.h"
 
-void usage(const char *app)
+static void usage()
 {
-    fprintf(stderr, "Usage: %s command keys project.pbxproj\n", app);
+    fprintf(stderr, "xcs cmd [-options]\n");
+    fprintf(stderr, "Commands:\n");
+    fprintf(stderr, "\tlist [-hv] path/to/project\n");
+    fprintf(stderr, "\trm [id:FILEID | path/to/file] path/to/project\n");
+
 }
 
 int main(int argc,  char * argv[])
 {
-    int c;
-    BOOL listCmd = NO;
-    BOOL verbose = NO;
-    
-    while ((c = getopt(argc, argv, "hlv")) != -1) {
-        switch (c) {
-            case 'h':
-                usage(argv[0]);
-                exit(0);
-            case 'l':
-                listCmd = YES;
-                break;
-            case 'v':
-                verbose = YES;
-                break;
-            default:
-                usage(argv[0]);
-                exit(1);
-                break;
-        }
-    }
-    
-    argc -= optind;
-    
-    if (argc < 1) {
-        usage(argv[0]);
-        exit(1);
-    }
-    
-    argv += optind;
 
-    XCProject *proj = [[XCProject alloc] init];
-    NSString *f = [NSString stringWithUTF8String:argv[0]];
-    @try {
-        [proj parseFile:f];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Failed to load project file: %@", exception);
+    if (argc < 2) {
+        usage();
+        exit(0);
     }
 
-    if (listCmd)
-        [proj listVerbose:verbose];
+    if (strcmp(argv[1], "list") == 0) {
+        argc--;
+        argv++;
+        cmd_list(argc, argv);
+    }
+    else if (strcmp(argv[1], "rm") == 0) {
+        argc--;
+        argv++;
+        cmd_rm(argc, argv);
+    }
+    else {
+        fprintf(stderr, "Unknown command: %s\n", argv[1]);
+        usage();
+        exit(0);
+    }
 
     return 0;
 }

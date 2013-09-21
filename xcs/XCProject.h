@@ -7,15 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NSDictionary+PBXObject.h"
 
 @interface XCProject : NSObject {
-    NSDictionary *projDict;
-    NSDictionary *objects;
-    NSDictionary *rootObj;
+    NSMutableDictionary *projDict;
+    NSMutableDictionary *objects;
+    NSMutableDictionary *rootObj;
 }
 
 - (BOOL)parseFile:(NSString*)path;
+- (BOOL)saveToFile:(NSString*)path;
 - (void)listVerbose:(BOOL)verbose;
-- (NSDictionary*)objectForId:(NSString*)objId;
+- (BOOL)removeFileId:(NSString*)fileId;
+- (NSMutableDictionary*)objectForId:(NSString*)objId;
 
 @end

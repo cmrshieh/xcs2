@@ -7,6 +7,7 @@
 //
 
 #import "XCProject.h"
+#import "NSObject+DeepMutableCopy.h"
 
 @implementation XCProject
 
@@ -21,8 +22,10 @@
 
 - (BOOL)parseFile:(NSString*)path
 {
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
-    projDict = [NSDictionary dictionaryWithContentsOfFile:path];
+    projDict = [dict deepMutableCopy];
     if (projDict) {
         objects = [projDict objectForKey:@"objects"];
         NSString *rootObjId = [projDict objectForKey:@"rootObject"];
@@ -34,7 +37,16 @@
     return NO;
 }
 
-- (NSDictionary*)objectForId:(NSString*)objId
+- (BOOL)saveToFile:(NSString*)path
+{
+    NSMutableString *projString = [NSMutableString stringWithString:@"// !$*UTF8*$!\n"];
+    [projString appendString:[projDict description]];
+    NSData *projData = [projString dataUsingEncoding:NSUTF8StringEncoding];
+    return [projData writeToFile:path atomically:YES];
+    
+}
+
+- (NSMutableDictionary*)objectForId:(NSString*)objId
 {
     return [objects valueForKey:objId];
 }
@@ -60,9 +72,9 @@
         printf(" (%s)", [folderId UTF8String]);
     
     BOOL isGroup = NO;
-    if ([[folder objectForKey:@"isa"] caseInsensitiveCompare:@"PBXGroup"] == NSOrderedSame)
+    if ([folder isA:@"PBXGroup"])
         isGroup = YES;
-    if ([[folder objectForKey:@"isa"] caseInsensitiveCompare:@"PBXVariantGroup"] == NSOrderedSame)
+    if ([folder isA:@"PBXVariantGroup"])
         isGroup = YES;
 
     if (isGroup) {
@@ -77,4 +89,80 @@
     else
         printf("\n");
 }
+
+- (BOOL)removeFileId:(NSString*)fileId {
+    NSDictionary *fileObj = [self objectForId:fileId];
+    if (!fileObj)
+        return NO;
+
+    if (![fileObj isA:@"PBXFileReference"])
+        return NO;
+
+    NSString *buildFileId = nil;
+    
+    for (NSString *objId in objects) {
+        NSDictionary *obj = [objects objectForKey:objId];
+        if (![obj isA:@"PBXBuildFile"])
+            continue;
+        NSString *refId = [obj objectForKey:@"fileRef"];
+        if ([refId isEqualToString:fileId]) {
+            buildFileId = objId;
+            break;
+        }
+    }
+    
+    if (buildFileId) {
+        // go through targets/phases and remove references to BuildFile
+        NSArray *targetIds = [rootObj objectForKey:@"targets"];
+        for (NSString *targetId in targetIds) {
+            NSDictionary *target = [self objectForId:targetId];
+            NSArray *buildPhaseIds = [target objectForKey:@"buildPhases"];
+            for (NSString *phaseId in buildPhaseIds) {
+                NSDictionary *phase = [self objectForId:phaseId];
+                NSMutableArray *files = [phase objectForKey:@"files"];
+                [files removeObject:buildFileId];
+            }
+        }
+        
+        // remove build file itself
+        [objects removeObjectForKey:buildFileId];
+    }
+    
+    // and now remove the file itself and references to it from groups
+    [self removeFromGroups:fileId];
+    [objects removeObjectForKey:fileId];
+
+    return YES;
+}
+
+- (void)removeFromGroups:(NSString*)refId
+{
+    NSString *mainFolderId = [rootObj objectForKey:@"mainGroup"];
+    NSMutableDictionary *mainFolder = [self objectForId:mainFolderId];
+    [self removeFromGroup:mainFolder itemWithId:refId];
+}
+
+
+- (void)removeFromGroup:(NSDictionary*)folder itemWithId:(NSString*)refId 
+{
+    BOOL isGroup = NO;
+    if ([folder isA:@"PBXGroup"])
+        isGroup = YES;
+    if ([folder isA:@"PBXVariantGroup"])
+        isGroup = YES;
+    
+    if (isGroup) {
+        NSMutableArray *children = [folder objectForKey:@"children"];
+
+        [children removeObject:refId];
+
+        for (NSString *idString in children) {
+            NSDictionary *obj = [self objectForId:idString];
+            if (obj)
+                [self removeFromGroup:obj itemWithId:refId];
+        }
+    }
+
+}
+
 @end
