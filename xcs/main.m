@@ -32,7 +32,6 @@ int main(int argc,  char * argv[])
                 verbose = YES;
                 break;
             default:
-                fprintf(stderr, "Unknown command-line switch: -%c\n", c);
                 usage(argv[0]);
                 exit(1);
                 break;
