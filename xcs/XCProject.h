@@ -7,16 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "XCElement.h"
 
 @interface XCProject : NSObject {
-    XCDictionary *projDict;
-    XCDictionary *objects;
-    XCDictionary *rootObj;
+    NSDictionary *projDict;
+    NSDictionary *objects;
+    NSDictionary *rootObj;
 }
 
-- (BOOL)parse:(NSString*)data;
+- (BOOL)parseFile:(NSString*)path;
 - (void)list;
-- (XCDictionary*)objectForId:(NSString*)objId;
+- (NSDictionary*)objectForId:(NSString*)objId;
 
 @end

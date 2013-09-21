@@ -7,8 +7,6 @@
 //
 
 #import "XCProject.h"
-#import "XCProjectParser.h"
-#import "XCElement.h"
 
 @implementation XCProject
 
@@ -21,14 +19,13 @@
     return self;
 }
 
-- (BOOL)parse:(NSString*)data
+- (BOOL)parseFile:(NSString*)path
 {
-    XCProjectParser* parser = [[XCProjectParser alloc] init];
 
-    projDict = [parser parse:data];
+    projDict = [NSDictionary dictionaryWithContentsOfFile:path];
     if (projDict) {
-        objects = [projDict dictValueForKey:@"objects"];
-        NSString *rootObjId = [projDict stringValueForKey:@"rootObject"];
+        objects = [projDict objectForKey:@"objects"];
+        NSString *rootObjId = [projDict objectForKey:@"rootObject"];
         rootObj = [self objectForId:rootObjId];
 
         return YES;
@@ -37,38 +34,38 @@
     return NO;
 }
 
-- (XCDictionary*)objectForId:(NSString*)objId
+- (NSDictionary*)objectForId:(NSString*)objId
 {
-    return [objects dictValueForKey:objId];
+    return [objects valueForKey:objId];
 }
 
 - (void)list
 {
-    NSString *mainFolderId = [rootObj stringValueForKey:@"mainGroup"];
-    XCDictionary *mainFolder = [self objectForId:mainFolderId];
+    NSString *mainFolderId = [rootObj objectForKey:@"mainGroup"];
+    NSDictionary *mainFolder = [self objectForId:mainFolderId];
     [self listFolder:mainFolder indent:0];
 }
 
-- (void)listFolder:(XCDictionary*)folder indent:(NSUInteger)indent
+- (void)listFolder:(NSDictionary*)folder indent:(NSUInteger)indent
 {
     for (NSUInteger i = 0; i < indent; i ++)
         printf(" ");
-    NSString *name = [folder stringValueForKey:@"name"];
+    NSString *name = [folder objectForKey:@"name"];
     if (name == nil)
-        name = [folder stringValueForKey:@"path"];
+        name = [folder objectForKey:@"path"];
     printf("%s", 
             [name UTF8String]);
     BOOL isGroup = NO;
-    if ([[folder stringValueForKey:@"isa"] caseInsensitiveCompare:@"PBXGroup"] == NSOrderedSame)
+    if ([[folder objectForKey:@"isa"] caseInsensitiveCompare:@"PBXGroup"] == NSOrderedSame)
         isGroup = YES;
-    if ([[folder stringValueForKey:@"isa"] caseInsensitiveCompare:@"PBXVariantGroup"] == NSOrderedSame)
+    if ([[folder objectForKey:@"isa"] caseInsensitiveCompare:@"PBXVariantGroup"] == NSOrderedSame)
         isGroup = YES;
 
     if (isGroup) {
         printf("/\n");
-        NSArray *children = [folder arrayValueForKey:@"children"];
-        for (XCString *idString in children) {
-            XCDictionary *obj = [self objectForId:idString.stringValue];
+        NSArray *children = [folder objectForKey:@"children"];
+        for (NSString *idString in children) {
+            NSDictionary *obj = [self objectForId:idString];
             if (obj)
                 [self listFolder:obj indent:indent+2];
         }

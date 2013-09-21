@@ -17,20 +17,13 @@ int main(int argc, const char * argv[])
     }
 
     @autoreleasepool {
-        NSError *err;
         XCProject *proj = [[XCProject alloc] init];
         NSString *f = [NSString stringWithUTF8String:argv[1]];
-        NSLog(@"--> %@", f);
-        NSString *projData = [NSString stringWithContentsOfFile:f encoding:NSUTF8StringEncoding error:&err];
-        if (projData == nil) {
-            NSLog(@"Failed ot read project file: %@", [err localizedDescription]);
-            exit (1);
-        }
         @try {
-            [proj parse:projData];
+            [proj parseFile:f];
         }
         @catch (NSException *exception) {
-            NSLog(@"Parser failed: %@", exception);
+            NSLog(@"Failed to load project file: %@", exception);
         }
 
         [proj list];
