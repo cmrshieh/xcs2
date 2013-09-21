@@ -15,7 +15,7 @@
 }
 
 - (BOOL)parseFile:(NSString*)path;
-- (void)list;
+- (void)listVerbose:(BOOL)verbose;
 - (NSDictionary*)objectForId:(NSString*)objId;
 
 @end

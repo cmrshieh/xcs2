@@ -9,25 +9,57 @@
 #import <Foundation/Foundation.h>
 #import "XCProject.h"
 
-int main(int argc, const char * argv[])
+void usage(const char *app)
 {
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s project.pbxproj\n", argv[0]);
-        exit(0);
+    fprintf(stderr, "Usage: %s command keys project.pbxproj\n", app);
+}
+
+int main(int argc,  char * argv[])
+{
+    int c;
+    BOOL listCmd = NO;
+    BOOL verbose = NO;
+    
+    while ((c = getopt(argc, argv, "hlv")) != -1) {
+        switch (c) {
+            case 'h':
+                usage(argv[0]);
+                exit(0);
+            case 'l':
+                listCmd = YES;
+                break;
+            case 'v':
+                verbose = YES;
+                break;
+            default:
+                fprintf(stderr, "Unknown command-line switch: -%c\n", c);
+                usage(argv[0]);
+                exit(1);
+                break;
+        }
+    }
+    
+    argc -= optind;
+    
+    if (argc < 1) {
+        usage(argv[0]);
+        exit(1);
+    }
+    
+    argv += optind;
+
+    XCProject *proj = [[XCProject alloc] init];
+    NSString *f = [NSString stringWithUTF8String:argv[0]];
+    @try {
+        [proj parseFile:f];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Failed to load project file: %@", exception);
     }
 
-    @autoreleasepool {
-        XCProject *proj = [[XCProject alloc] init];
-        NSString *f = [NSString stringWithUTF8String:argv[1]];
-        @try {
-            [proj parseFile:f];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"Failed to load project file: %@", exception);
-        }
+    if (listCmd)
+        [proj listVerbose:verbose];
 
-        [proj list];
-    }
     return 0;
 }
 

@@ -39,14 +39,15 @@
     return [objects valueForKey:objId];
 }
 
-- (void)list
+- (void)listVerbose:(BOOL)verbose
 {
     NSString *mainFolderId = [rootObj objectForKey:@"mainGroup"];
     NSDictionary *mainFolder = [self objectForId:mainFolderId];
-    [self listFolder:mainFolder indent:0];
+    [self listFolder:mainFolder withId:mainFolderId indent:0 verbose:verbose];
 }
 
-- (void)listFolder:(NSDictionary*)folder indent:(NSUInteger)indent
+
+- (void)listFolder:(NSDictionary*)folder withId:(NSString*)folderId indent:(NSUInteger)indent verbose:(BOOL)verbose
 {
     for (NSUInteger i = 0; i < indent; i ++)
         printf(" ");
@@ -55,6 +56,9 @@
         name = [folder objectForKey:@"path"];
     printf("%s", 
             [name UTF8String]);
+    if (verbose)
+        printf(" (%s)", [folderId UTF8String]);
+    
     BOOL isGroup = NO;
     if ([[folder objectForKey:@"isa"] caseInsensitiveCompare:@"PBXGroup"] == NSOrderedSame)
         isGroup = YES;
@@ -67,7 +71,7 @@
         for (NSString *idString in children) {
             NSDictionary *obj = [self objectForId:idString];
             if (obj)
-                [self listFolder:obj indent:indent+2];
+                [self listFolder:obj withId:idString indent:indent+2 verbose:verbose];
         }
     }
     else
