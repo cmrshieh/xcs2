@@ -51,5 +51,5 @@ void cmd_list(int argc, char **argv)
         NSLog(@"Failed to load project file: %@", exception);
     }
     
-    [proj listVerbose:verbose];
+    [proj listVerbose:verbose];    
 }

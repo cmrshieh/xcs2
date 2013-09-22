@@ -20,5 +20,6 @@
 - (void)listVerbose:(BOOL)verbose;
 - (BOOL)removeFileId:(NSString*)fileId error:(NSError**)error;
 - (NSMutableDictionary*)objectForId:(NSString*)objId;
+- (NSString*)idForPath:(NSString*)path;
 
 @end

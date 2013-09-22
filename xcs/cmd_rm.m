@@ -15,10 +15,7 @@ static void usage()
 
 void cmd_rm(int argc, char **argv)
 {
-    int c;
-    char *file_spec;
-    BOOL is_path = YES;
-    
+    int c;    
     
     while ((c = getopt(argc, argv, "h")) != -1) {
         switch (c) {
@@ -41,13 +38,6 @@ void cmd_rm(int argc, char **argv)
     }
     
     argv += optind;
-
-    if (strncmp("id:", argv[0], 3) == 0) {
-        is_path = NO;
-        file_spec = strdup(argv[0] + 3);
-    }
-    else
-        file_spec = strdup(argv[0]);
     
     XCProject *proj = [[XCProject alloc] init];
     NSString *f = [NSString stringWithUTF8String:argv[1]];
@@ -59,16 +49,25 @@ void cmd_rm(int argc, char **argv)
         NSLog(@"Failed to load project file: %@", exception);
     }
     
-    NSError *err;
-    if (is_path) {
-        fprintf(stderr, "Delete by name not implemented\n");
-        return;
+    
+
+    NSString *fileId;
+    if (strncmp("id:", argv[0], 3) == 0) {
+        fileId = [NSString stringWithUTF8String:(argv[0] + 3)];
     }
     else {
-        if (![proj removeFileId:[NSString stringWithUTF8String:file_spec] error:&err]) {
-            fprintf(stderr, "Couldn't remove object: %s\n", [[err localizedDescription] UTF8String]);
+        fileId = [proj idForPath:[NSString stringWithUTF8String:argv[0]]];
+        if (fileId == nil) {
+            fprintf(stderr, "%s: no such file\n", argv[0]);
             return;
         }
+    }
+    
+
+    NSError *err;
+    if (![proj removeFileId:fileId error:&err]) {
+        fprintf(stderr, "Couldn't remove object: %s\n", [[err localizedDescription] UTF8String]);
+        return;
     }
     
     [proj saveToFile:f];

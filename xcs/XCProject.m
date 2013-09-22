@@ -68,6 +68,8 @@
     NSString *name = [group objectForKey:@"name"];
     if (name == nil)
         name = [group objectForKey:@"path"];
+    if (name == nil)
+        name = @"";
     printf("%s", 
             [name UTF8String]);
     if (verbose)
@@ -173,6 +175,64 @@
                 [self removeFromGroup:obj itemWithId:refId];
         }
     }
+}
+
+
+- (NSString*)idForPath:(NSString*)path
+{
+    NSArray *elements = [path pathComponents];
+    NSString *mainGroupId = [rootObj objectForKey:@"mainGroup"];
+    NSMutableDictionary *mainGroup = [self objectForId:mainGroupId];
+    NSRange range;
+    
+    if ([elements count] == 0)
+        return nil;
+    
+    if ([[elements objectAtIndex:0] isEqualToString:@"/"]) {
+        range.location = 1;
+        range.length = [elements count] - 1;
+        elements = [elements subarrayWithRange:range];
+    }
+
+    return [self idForPathElements:elements inObject:mainGroup withId:mainGroupId];
+}
+
+- (NSString*)idForPathElements:(NSArray*)pathElements inObject:(NSMutableDictionary*)group withId:(NSString*)objId
+{
+
+    // should be last element and name should match with the file
+    if ([pathElements count] == 0) {
+            return objId;
+    }
+    
+    BOOL isGroup = NO;
+    if ([group isA:@"PBXGroup"])
+        isGroup = YES;
+    if ([group isA:@"PBXVariantGroup"])
+        isGroup = YES;
+    
+    if (isGroup) {
+        NSArray *children = [group objectForKey:@"children"];
+        NSString *currentElement = [pathElements objectAtIndex:0];
+        for (NSString *idString in children) {
+            NSMutableDictionary *obj = [self objectForId:idString];
+            NSString *name = [obj objectForKey:@"name"];
+            if (name == nil)
+                name = [obj objectForKey:@"path"];
+            if (name == nil)
+                name = @"";
+            if ([name isEqualToString:currentElement]) {
+                NSRange range;
+                
+                range.location = 1;
+                range.length = [pathElements count] - 1;
+                NSArray *newElements = [pathElements subarrayWithRange:range];
+                return [self idForPathElements:newElements inObject:obj withId:idString];
+            }
+        }
+    }
+    
+    return nil;
 }
 
 @end
