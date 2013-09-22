@@ -55,37 +55,37 @@
 
 - (void)listVerbose:(BOOL)verbose
 {
-    NSString *mainFolderId = [rootObj objectForKey:@"mainGroup"];
-    NSDictionary *mainFolder = [self objectForId:mainFolderId];
-    [self listFolder:mainFolder withId:mainFolderId indent:0 verbose:verbose];
+    NSString *mainGroupId = [rootObj objectForKey:@"mainGroup"];
+    NSDictionary *mainGroup = [self objectForId:mainGroupId];
+    [self listGroup:mainGroup withId:mainGroupId indent:0 verbose:verbose];
 }
 
 
-- (void)listFolder:(NSDictionary*)folder withId:(NSString*)folderId indent:(NSUInteger)indent verbose:(BOOL)verbose
+- (void)listGroup:(NSDictionary*)group withId:(NSString*)groupId indent:(NSUInteger)indent verbose:(BOOL)verbose
 {
     for (NSUInteger i = 0; i < indent; i ++)
         printf(" ");
-    NSString *name = [folder objectForKey:@"name"];
+    NSString *name = [group objectForKey:@"name"];
     if (name == nil)
-        name = [folder objectForKey:@"path"];
+        name = [group objectForKey:@"path"];
     printf("%s", 
             [name UTF8String]);
     if (verbose)
-        printf(" (%s)", [folderId UTF8String]);
+        printf(" (%s)", [groupId UTF8String]);
     
     BOOL isGroup = NO;
-    if ([folder isA:@"PBXGroup"])
+    if ([group isA:@"PBXGroup"])
         isGroup = YES;
-    if ([folder isA:@"PBXVariantGroup"])
+    if ([group isA:@"PBXVariantGroup"])
         isGroup = YES;
 
     if (isGroup) {
         printf("/\n");
-        NSArray *children = [folder objectForKey:@"children"];
+        NSArray *children = [group objectForKey:@"children"];
         for (NSString *idString in children) {
             NSDictionary *obj = [self objectForId:idString];
             if (obj)
-                [self listFolder:obj withId:idString indent:indent+2 verbose:verbose];
+                [self listGroup:obj withId:idString indent:indent+2 verbose:verbose];
         }
     }
     else
@@ -148,22 +148,22 @@
 
 - (void)removeFromGroups:(NSString*)refId
 {
-    NSString *mainFolderId = [rootObj objectForKey:@"mainGroup"];
-    NSMutableDictionary *mainFolder = [self objectForId:mainFolderId];
-    [self removeFromGroup:mainFolder itemWithId:refId];
+    NSString *mainGroupId = [rootObj objectForKey:@"mainGroup"];
+    NSMutableDictionary *mainGroup = [self objectForId:mainGroupId];
+    [self removeFromGroup:mainGroup itemWithId:refId];
 }
 
 
-- (void)removeFromGroup:(NSDictionary*)folder itemWithId:(NSString*)refId 
+- (void)removeFromGroup:(NSDictionary*)group itemWithId:(NSString*)refId
 {
     BOOL isGroup = NO;
-    if ([folder isA:@"PBXGroup"])
+    if ([group isA:@"PBXGroup"])
         isGroup = YES;
-    if ([folder isA:@"PBXVariantGroup"])
+    if ([group isA:@"PBXVariantGroup"])
         isGroup = YES;
     
     if (isGroup) {
-        NSMutableArray *children = [folder objectForKey:@"children"];
+        NSMutableArray *children = [group objectForKey:@"children"];
 
         [children removeObject:refId];
 
@@ -173,7 +173,6 @@
                 [self removeFromGroup:obj itemWithId:refId];
         }
     }
-
 }
 
 @end
