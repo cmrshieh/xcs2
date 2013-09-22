@@ -59,12 +59,17 @@ void cmd_rm(int argc, char **argv)
         NSLog(@"Failed to load project file: %@", exception);
     }
     
+    NSError *err;
     if (is_path) {
         fprintf(stderr, "Delete by name not implemented\n");
         return;
     }
-    else
-        [proj removeFileId:[NSString stringWithUTF8String:file_spec]];
+    else {
+        if (![proj removeFileId:[NSString stringWithUTF8String:file_spec] error:&err]) {
+            fprintf(stderr, "Couldn't remove object: %s\n", [[err localizedDescription] UTF8String]);
+            return;
+        }
+    }
     
     [proj saveToFile:f];
 }

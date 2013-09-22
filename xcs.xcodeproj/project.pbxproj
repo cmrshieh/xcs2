@@ -11,6 +11,8 @@
 		9F4874B617ED57B10023A46B /* cmd_rm.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874B517ED57B10023A46B /* cmd_rm.m */; };
 		9F4874B917ED5BBF0023A46B /* NSDictionary+PBXObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874B817ED5BBF0023A46B /* NSDictionary+PBXObject.m */; };
 		9F4874BC17ED67DB0023A46B /* NSObject+DeepMutableCopy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874BB17ED67DB0023A46B /* NSObject+DeepMutableCopy.m */; };
+		9F4874BF17EE75D20023A46B /* XCErrorDomain.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874BE17EE75D20023A46B /* XCErrorDomain.m */; };
+		9F4874C217EE763B0023A46B /* XCError.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4874C117EE763B0023A46B /* XCError.m */; };
 		9F4D4847172DE8E5003F0E26 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F4D4846172DE8E5003F0E26 /* Foundation.framework */; };
 		9F4D484A172DE8E5003F0E26 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D4849172DE8E5003F0E26 /* main.m */; };
 		9F4D484E172DE8E5003F0E26 /* xcs.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 9F4D484D172DE8E5003F0E26 /* xcs.1 */; };
@@ -38,6 +40,10 @@
 		9F4874B817ED5BBF0023A46B /* NSDictionary+PBXObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+PBXObject.m"; sourceTree = "<group>"; };
 		9F4874BA17ED67DB0023A46B /* NSObject+DeepMutableCopy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+DeepMutableCopy.h"; sourceTree = "<group>"; };
 		9F4874BB17ED67DB0023A46B /* NSObject+DeepMutableCopy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+DeepMutableCopy.m"; sourceTree = "<group>"; };
+		9F4874BD17EE75D20023A46B /* XCErrorDomain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCErrorDomain.h; sourceTree = "<group>"; };
+		9F4874BE17EE75D20023A46B /* XCErrorDomain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCErrorDomain.m; sourceTree = "<group>"; };
+		9F4874C017EE763B0023A46B /* XCError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCError.h; sourceTree = "<group>"; };
+		9F4874C117EE763B0023A46B /* XCError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCError.m; sourceTree = "<group>"; };
 		9F4D4843172DE8E5003F0E26 /* xcs */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xcs; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F4D4846172DE8E5003F0E26 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9F4D4849172DE8E5003F0E26 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -99,6 +105,10 @@
 				9F4874BA17ED67DB0023A46B /* NSObject+DeepMutableCopy.h */,
 				9F4874BB17ED67DB0023A46B /* NSObject+DeepMutableCopy.m */,
 				9F4874B817ED5BBF0023A46B /* NSDictionary+PBXObject.m */,
+				9F4874BD17EE75D20023A46B /* XCErrorDomain.h */,
+				9F4874BE17EE75D20023A46B /* XCErrorDomain.m */,
+				9F4874C017EE763B0023A46B /* XCError.h */,
+				9F4874C117EE763B0023A46B /* XCError.m */,
 			);
 			path = xcs;
 			sourceTree = "<group>";
@@ -168,6 +178,8 @@
 				9F4874B617ED57B10023A46B /* cmd_rm.m in Sources */,
 				9F4874B917ED5BBF0023A46B /* NSDictionary+PBXObject.m in Sources */,
 				9F4874BC17ED67DB0023A46B /* NSObject+DeepMutableCopy.m in Sources */,
+				9F4874BF17EE75D20023A46B /* XCErrorDomain.m in Sources */,
+				9F4874C217EE763B0023A46B /* XCError.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

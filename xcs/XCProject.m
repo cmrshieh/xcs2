@@ -8,6 +8,7 @@
 
 #import "XCProject.h"
 #import "NSObject+DeepMutableCopy.h"
+#import "XCError.h"
 
 @implementation XCProject
 
@@ -25,8 +26,9 @@
     
     NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
-    projDict = [dict deepMutableCopy];
-    if (projDict) {
+    if (dict) {
+        projDict = [dict deepMutableCopy];
+
         objects = [projDict objectForKey:@"objects"];
         NSString *rootObjId = [projDict objectForKey:@"rootObject"];
         rootObj = [self objectForId:rootObjId];
@@ -90,13 +92,22 @@
         printf("\n");
 }
 
-- (BOOL)removeFileId:(NSString*)fileId {
+- (BOOL)removeFileId:(NSString*)fileId error:(NSError**)error
+{
+    if (error)
+        *error = nil;
     NSDictionary *fileObj = [self objectForId:fileId];
-    if (!fileObj)
+    if (!fileObj) {
+        if (error)
+            *error = [XCError objectNotFound];
         return NO;
+    }
 
-    if (![fileObj isA:@"PBXFileReference"])
+    if (![fileObj isA:@"PBXFileReference"]) {
+        if (error)
+            *error = [XCError invaidOperation];
         return NO;
+    }
 
     NSString *buildFileId = nil;
     

@@ -18,7 +18,7 @@
 - (BOOL)parseFile:(NSString*)path;
 - (BOOL)saveToFile:(NSString*)path;
 - (void)listVerbose:(BOOL)verbose;
-- (BOOL)removeFileId:(NSString*)fileId;
+- (BOOL)removeFileId:(NSString*)fileId error:(NSError**)error;
 - (NSMutableDictionary*)objectForId:(NSString*)objId;
 
 @end
